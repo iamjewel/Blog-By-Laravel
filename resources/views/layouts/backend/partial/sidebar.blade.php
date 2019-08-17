@@ -40,39 +40,70 @@
             <li class="header">MAIN NAVIGATION</li>
 
 
+            @if(Request::is('admin*'))
+
                 <li class="{{Request::is('admin/dashboard') ? 'active':''}}">
-                    <a href="">
+                    <a href="{{route('admin.dashboard')}}">
                         <i class="material-icons">dashboard</i>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
-                <li class="">
-                    <a href="">
-                        <i class="material-icons">label</i>
-                        <span>Tag</span>
+                <li class="header">System</li>
+
+
+                <li>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        <i class="material-icons">input</i>
+                        <span>   Sign Out</span>
+
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
+            @endif
+
+
+            @if(Request::is('author*'))
+
+
+                <li class="{{Request::is('author/dashboard') ? 'active':''}}">
+                    <a href="{{route('author.dashboard')}}">
+                        <i class="material-icons">dashboard</i>
+                        <span>Dashboard</span>
                     </a>
                 </li>
 
+                <li class="header">System</li>
 
-            <li class="">
-                <a class="dropdown-item" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
+
+                <li>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                    <i class="material-icons">input</i>
-                    <span>   Sign Out</span>
+                        <i class="material-icons">input</i>
+                        <span>   Sign Out</span>
 
-                </a>
+                    </a>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
+
+            @endif
+
+
+
+
 
 
         </ul>
     </div>
-
 
 
     <!-- Footer -->
