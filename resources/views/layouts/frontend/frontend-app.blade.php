@@ -17,6 +17,9 @@
     <link href="{{asset('/')}}assets/frontend/css/swiper.css" rel="stylesheet">
     <link href="{{asset('/')}}assets/frontend/css/ionicons.css" rel="stylesheet">
 
+    <!--ToastrJs CSS -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
     <!-- Specific Page Stylesheets -->
     @stack('css')
 
@@ -39,6 +42,9 @@
 <script src="{{asset('/')}}assets/frontend/js/swiper.js"></script>
 <script src="{{asset('/')}}assets/frontend/js/scripts.js"></script>
 
+<!-- Toastr Js -->
+<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+{!! Toastr::message() !!}
 
 @stack('js')
 
