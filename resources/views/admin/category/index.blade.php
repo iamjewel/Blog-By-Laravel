@@ -60,7 +60,8 @@
                             <td>{{$category->updated_at}}</td>
 
                             <td class="text-center">
-                                <a href="{{route('admin.category.edit',$category->id)}}" class="btn btn-info waves-effect">
+                                <a href="{{route('admin.category.edit',$category->id)}}"
+                                   class="btn btn-info waves-effect">
                                     <i class="material-icons">edit</i>
                                 </a>
 
@@ -69,7 +70,8 @@
                                     <i class="material-icons">delete</i>
                                 </button>
 
-                                <form id="delete-form-{{$category->id}}" action="{{route('admin.category.destroy',$category->id)}}"
+                                <form id="delete-form-{{$category->id}}"
+                                      action="{{route('admin.category.destroy',$category->id)}}"
                                       method="POST" style="display: none">
                                     @csrf
                                     @method('DELETE')
@@ -98,9 +100,37 @@
 
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.15.3/dist/sweetalert2.all.min.js"></script>
+
     <script type="text/javascript">
         function deleteCategory(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            });
 
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+
+                }
+            })
         }
     </script>
 @endpush

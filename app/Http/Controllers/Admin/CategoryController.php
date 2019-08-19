@@ -34,98 +34,132 @@ class CategoryController extends Controller
             'image' => 'required|mimes:jpeg,png,jpg'
         ]);
 
-
         $image = $request->file('image');
         $slug = str_slug($request->name);
 
         if (isset($image)) {
 
+
+            //Image Name
+            $imageName = $slug . '-' . time() . '.' . $image->getClientOriginalExtension();
+
             //Check and Make Category Img Dir.
             if (!Storage::disk('public')->exists('category')) {
                 Storage::disk('public')->makeDirectory('category');
             }
-            //Image Name
-            $imageName = $slug . '-' . time() . '.' . $image->getClientOriginalExtension();
 
-            //Image Url
-            $directory = 'storage/category/';
-            $imageUrl = $directory . $imageName;
-
-            //Image Upload For Category
-            Image::make($image)->resize(1600, 479)->save($imageUrl);
+            //Resize & Upload Image For Category
+            $category = Image::make($image)->resize(1600, 479)->stream();
+            Storage::disk('public')->put('category/' . $imageName, $category);
 
 
-            //Check Category Slider Img Dir.
+            //Check and Make Category Slider Img Dir.
             if (!Storage::disk('public')->exists('category/slider')) {
                 Storage::disk('public')->makeDirectory('category/slider');
             }
 
-            //Image Url
-            $directory = 'storage/category/slider/';
-            $imageUrl = $directory . $imageName;
-
-            //Image Upload For Category Slider
-            Image::make($image)->resize(500, 333)->save($imageUrl);
+            //Image Resize & Upload For Category Slider
+            $categorySliderImage = Image::make($image)->resize(500, 333)->stream();
+            Storage::disk('public')->put('category/slider/' . $imageName, $categorySliderImage);
 
         } else {
-            $imageUrl = 'storage/category/default.png';
+            $imageName = 'default.png';
         }
 
         $category = new Category();
 
         $category->name = $request->name;
         $category->slug = $slug;
-        $category->image = $imageUrl;
+        $category->image = $imageName;
         $category->save();
 
-        Toastr::success('Tag Updated Successfully', 'success');
+        Toastr::success('Category Added Successfully', 'success');
 
         return redirect()->route('admin.category.index');
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+
+        $category = Category::find($id);
+        return view('admin.category.edit', compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+
+        $this->validate($request, [
+            'name' => 'required|unique:categories,name,' . $category->id,
+            'image' => 'mimes:jpeg,png,jpg'
+        ]);
+
+        $image = $request->file('image');
+        $slug = str_slug($request->name);
+
+        if (isset($image)) {
+
+            //Image Name
+            $imageName = $slug . '-' . time() . '.' . $image->getClientOriginalExtension();
+
+            //Check and Make Category Image Dir.
+            if (!Storage::disk('public')->exists('category')) {
+                Storage::disk('public')->makeDirectory('category');
+            }
+
+            //Delete Old Category Image
+            if (Storage::disk('public')->exists('category/' . $category->image)) {
+                Storage::disk('public')->delete('category/' . $category->image);
+            }
+
+            //Image Upload For Category
+            $categoryImage = Image::make($image)->resize(1600, 479)->stream();
+            Storage::disk('public')->put('category/' . $imageName, $categoryImage);
+
+
+            //Check and Make Category Slider Img Dir.
+            if (!Storage::disk('public')->exists('category/slider')) {
+                Storage::disk('public')->makeDirectory('category/slider');
+            }
+
+            //Delete Old Category Slider Image
+            if (Storage::disk('public')->exists('category/slider/' . $category->image)) {
+                Storage::disk('public')->delete('category/slider/' . $category->image);
+            }
+
+            //Image Upload For Category Slier
+            $categorySliderImage = Image::make($image)->resize(500, 333)->stream();
+            Storage::disk('public')->put('category/slider/' . $imageName, $categorySliderImage);
+
+        } else {
+            $imageName = $category->image;
+        }
+
+        $category->name = $request->name;
+        $category->slug = $slug;
+        $category->image = $imageName;
+        $category->save();
+
+        Toastr::success('Category Updated Successfully', 'success');
+
+        return redirect()->route('admin.category.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+        Category::find($id)->delete();
+
+        Toastr::success('Category Deleted Successfully', 'success');
+
+        return redirect()->route('admin.category.index');
     }
 }
