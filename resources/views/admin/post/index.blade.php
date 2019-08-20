@@ -13,13 +13,13 @@
             <div class="header row">
 
                 <h2 class="col-md-6">
-                    Manage Category
-                    <span class="badge bg-info">{{$categories->count()}}</span>
+                    Manage Post
+                    <span class="badge bg-info">{{$posts->count()}}</span>
                 </h2>
 
-                <a class="btn btn-primary waves-effect col-md-6" href="{{route('admin.category.create')}}">
+                <a class="btn btn-primary waves-effect col-md-6" href="{{route('admin.post.create')}}">
                     <i class="material-icons">add</i>
-                    <span>Add New Category</span>
+                    <span>Add New Post</span>
                 </a>
             </div>
         </div>
@@ -42,8 +42,12 @@
                     <tr>
 
                         <th class="text-center">ID</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Post Count</th>
+                        <th class="text-center">Author</th>
+                        <th class="text-center">Title</th>
+                        <th class="text-center">View</th>
+                        <th class="text-center">Approval</th>
+                        <th class="text-center">Status</th>
+{{--                        <th class="text-center">Body</th>--}}
                         <th class="text-center">Created At</th>
                         <th class="text-center">Updated At</th>
                         <th class="text-center">Action</th>
@@ -54,27 +58,45 @@
                     <tbody>
 
                     @php($i=1)
-                    @foreach($categories as $category)
+                    @foreach($posts as $post)
                         <tr>
                             <td>{{$i++}}</td>
-                            <td>{{$category->name}}</td>
-                            <td>{{$category->posts->count()}}</td>
-                            <td>{{$category->created_at}}</td>
-                            <td>{{$category->updated_at}}</td>
+                            <td>{{$post->user->name}}</td>
+                            <td>{{str_limit($post->title,20)}}</td>
+                            <td>{{$post->view_count}}</td>
+
+                            <td>
+                                @if($post->is_approved == true)
+                                    <span class="badge bg-green">Approved</span>
+                                @else
+                                    <span class="badge bg-pink">Pending</span>
+                                @endif
+                            </td>
+
+                            <td>
+                                @if($post->status == true)
+                                    <span class="badge bg-green">Published</span>
+                                @else
+                                    <span class="badge bg-red">Not Published</span>
+                                @endif
+                            </td>
+{{--                            <td>{{str_limit($post->body,20)}}</td>--}}
+                            <td>{{$post->created_at}}</td>
+                            <td>{{$post->updated_at}}</td>
 
                             <td class="text-center">
-                                <a href="{{route('admin.category.edit',$category->id)}}"
+                                <a href="{{route('admin.post.edit',$post->id)}}"
                                    class="btn btn-info waves-effect">
                                     <i class="material-icons">edit</i>
                                 </a>
 
                                 <button class="btn btn-danger waves-effect" type="button"
-                                        onclick="deleteCategory({{$category->id}})">
+                                        onclick="deletePost({{$post->id}})">
                                     <i class="material-icons">delete</i>
                                 </button>
 
-                                <form id="delete-form-{{$category->id}}"
-                                      action="{{route('admin.category.destroy',$category->id)}}"
+                                <form id="delete-form-{{$post->id}}"
+                                      action="{{route('admin.post.destroy',$post->id)}}"
                                       method="POST" style="display: none">
                                     @csrf
                                     @method('DELETE')
@@ -89,7 +111,7 @@
                 </table>
 
                 <div style="margin-left: 430px">
-                    {{ $categories->links() }}
+                    {{ $posts->links() }}
                 </div>
 
                 <div style="margin-left: 430px">
@@ -103,37 +125,11 @@
 
 
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.15.3/dist/sweetalert2.all.min.js"></script>
+    {{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.15.3/dist/sweetalert2.all.min.js"></script>--}}
 
     <script type="text/javascript">
-        function deleteCategory(id) {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-            });
+        function deletePost(id) {
 
-            swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    event.preventDefault();
-                    document.getElementById('delete-form-' + id).submit();
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-
-                }
-            })
         }
     </script>
 @endpush

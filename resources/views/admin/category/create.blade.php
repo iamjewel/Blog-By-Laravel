@@ -38,11 +38,13 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group form-float">
+
+                            <div class="form-group">
+                                <span>Image</span>
                                 <div class="form-line">
                                     <input class="form-control @error('image') is-invalid @enderror" type="file"
-                                           id="image"  name="image">
-                                    <label class="form-label">Image</label>
+                                           id="image" name="image">
+
                                 </div>
 
                                 @error('image')

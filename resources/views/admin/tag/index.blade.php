@@ -14,6 +14,7 @@
 
                 <h2 class="col-md-6">
                     Manage Tag
+                    <span class="badge bg-info">{{$tags->count()}}</span>
                 </h2>
 
                 <a class="btn btn-primary waves-effect col-md-6" href="{{route('admin.tag.create')}}">
@@ -42,6 +43,7 @@
 
                         <th class="text-center">ID</th>
                         <th class="text-center">Name</th>
+                        <th class="text-center">Post Count</th>
                         <th class="text-center">Created At</th>
                         <th class="text-center">Updated At</th>
                         <th class="text-center">Action</th>
@@ -56,6 +58,7 @@
                         <tr>
                             <td>{{$i++}}</td>
                             <td>{{$tag->name}}</td>
+                            <td>{{$tag->posts->count()}}</td>
                             <td>{{$tag->created_at}}</td>
                             <td>{{$tag->updated_at}}</td>
 
