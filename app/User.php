@@ -33,6 +33,15 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+
+
+
+
     /**
      * The attributes that should be cast to native types.
      *
