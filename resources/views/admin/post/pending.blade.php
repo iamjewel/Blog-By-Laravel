@@ -1,6 +1,6 @@
 @extends('layouts.backend.backend-app')
 
-@section('title','Post')
+@section('title','Pending')
 
 @push('css')
 
@@ -85,9 +85,31 @@
                             <td>{{$post->updated_at->toFormattedDateString()}}</td>
 
                             <td class="text-center">
+
+                                @if($post->is_approved == false)
+
+                                    <button type="button" class="btn btn-outline-primary waves-effect pull-right"
+                                            onclick="approvePost({{ $post->id }})">
+
+                                        <i class="material-icons">clock</i>
+                                        <span>Need Approval</span>
+                                    </button>
+
+                                    <form method="post" action="{{ route('admin.post.approve',$post->id) }}" id="approval-form"
+                                          style="display: none">
+                                        @csrf
+                                        @method('PUT')
+                                    </form>
+                                @else
+                                    <button type="button" class="btn btn-success pull-right" disabled>
+                                        <i class="material-icons">done</i>
+                                        <span>Approved</span>
+                                    </button>
+                                @endif
+
                                 <a href="{{route('admin.post.show',$post->id)}}"
-                                   class="btn btn-info waves-effect">
-                                    <i class="material-icons">visibility</i>
+                                   class="btn btn-info waves-effect" >
+                                    <i class="material-icons" >visibility</i>
                                 </a>
 
                                 <a href="{{route('admin.post.edit',$post->id)}}"
@@ -130,10 +152,10 @@
 
 
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.15.3/dist/sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.15.3/dist/sweetalert2.all.min.js"></script>
 
     <script type="text/javascript">
-        function deletePost(id) {
+        function approvePost(id) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -144,16 +166,16 @@
 
             swalWithBootstrapButtons.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                text: "You Want To Approve this!",
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
+                confirmButtonText: 'Yes, Approve it!',
+                cancelButtonText: 'No',
                 reverseButtons: true
             }).then((result) => {
                 if (result.value) {
                     event.preventDefault();
-                    document.getElementById('delete-form-' + id).submit();
+                    document.getElementById('approval-form').submit();
                 } else if (
                     /* Read more about handling dismissals below */
                     result.dismiss === Swal.DismissReason.cancel

@@ -1,6 +1,6 @@
 @extends('layouts.backend.backend-app')
 
-@section('title','Category')
+@section('title','Post')
 
 @push('css')
 
@@ -15,14 +15,16 @@
 
             <button type="button" class="btn btn-outline-primary waves-effect pull-right"
                     onclick="approvePost({{ $post->id }})">
+
                 <i class="material-icons">clock</i>
                 <span>Need Approval</span>
             </button>
 
-            {{--            <form method="post" action="{{ route('admin.post.approve',$post->id) }}" id="approval-form" style="display: none">--}}
-            {{--                @csrf--}}
-            {{--                @method('PUT')--}}
-            {{--            </form>--}}
+            <form method="post" action="{{ route('admin.post.approve',$post->id) }}" id="approval-form"
+                  style="display: none">
+                @csrf
+                @method('PUT')
+            </form>
         @else
             <button type="button" class="btn btn-success pull-right" disabled>
                 <i class="material-icons">done</i>
@@ -99,7 +101,6 @@
                     </div>
 
                     <div class="body">
-                        {{--                        <img class="img-responsive thumbnail" src="{{ url('storage/post/'. $post->image) }}">--}}
                         <img class="img-responsive thumbnail"
                              src="{{ Storage::disk('public')->url('post/'.$post->image) }}" alt="">
                     </div>
@@ -114,5 +115,37 @@
 
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.15.3/dist/sweetalert2.all.min.js"></script>
 
+    <script type="text/javascript">
+        function approvePost(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            });
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You Want To Approve this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Approve it!',
+                cancelButtonText: 'No',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('approval-form').submit();
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+
+                }
+            })
+        }
+    </script>
 @endpush

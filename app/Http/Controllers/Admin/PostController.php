@@ -164,11 +164,30 @@ class PostController extends Controller
     }
 
     //Pending Post Show
-    public function pendingPost()
+    public function pending()
     {
-        $post = Post::where('is_approved', false)->get();
-
+        $posts = Post::where('is_approved', false)->latest()->paginate();
+        return view('admin.post.pending', compact('posts'));
     }
+
+    //Approve Pending Post Function
+    public function approval($id)
+    {
+        $post = Post::find($id);
+
+        if ($post->is_approved == false) {
+            $post->is_approved = true;
+            $post->save();
+
+            Toastr::success('Post Successfully Approved :)', 'Success');
+        } else {
+
+            Toastr::info('This Post is Already Approved', 'Info');
+        }
+
+        return redirect()->back();
+    }
+
 
     //Delete Post Function
     public function destroy(Post $post)

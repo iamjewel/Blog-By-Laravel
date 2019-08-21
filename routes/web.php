@@ -18,8 +18,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::resource('post', 'PostController');
 
 
-        Route::get('post/{id}/pending', 'PostController@pendingPost')->name('post.pending');
-        Route::put('post/{id}/approve', 'PostController@approvePost')->name('post.approve');
+        Route::get('/pending/post','PostController@pending')->name('post.pending');
+        Route::put('/post/{id}/approve','PostController@approval')->name('post.approve');
     });
 
 
