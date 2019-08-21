@@ -163,6 +163,13 @@ class PostController extends Controller
         return redirect()->route('admin.post.index');
     }
 
+    //Pending Post Show
+    public function pendingPost()
+    {
+        $post = Post::where('is_approved', false)->get();
+
+    }
+
     //Delete Post Function
     public function destroy(Post $post)
     {
