@@ -13,7 +13,7 @@
 
         <form action="{{route('admin.post.update',$post->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
-            @method('PUT')
+        @method('PUT')
         <!--Add Post Title-->
             <div class="row clearfix">
                 <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
@@ -29,7 +29,8 @@
 
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input value="{{$post->title}}" class="form-control @error('title') is-invalid @enderror" type="text"
+                                    <input value="{{$post->title}}"
+                                           class="form-control @error('title') is-invalid @enderror" type="text"
                                            id="title" name="title">
                                     <label class="form-label">Post Title</label>
                                 </div>
@@ -57,7 +58,8 @@
                             </div>
 
                             <div class="form-group">
-                                <input class="filled-in" type="checkbox" id="status" name="status" value="1">
+                                <input class="filled-in" type="checkbox" id="status" name="status"
+                                       value="1" {{$post->status ==true ? 'checked':''}}>
                                 <label for="status">Publish</label>
                             </div>
 
@@ -83,7 +85,14 @@
                                     <select name="categories[]" id="category" class="form-control show-tick"
                                             data-live-search="true" multiple>
                                         @foreach($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option
+                                                @foreach($post->categories as $postCategory)
+                                                    {{$postCategory->id == $category->id ? 'selected':''}}
+                                                @endforeach
+                                                value="{{ $category->id }}">
+
+                                                {{ $category->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -95,7 +104,13 @@
                                     <select name="tags[]" id="tag" class="form-control show-tick"
                                             data-live-search="true" multiple>
                                         @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                            <option
+                                                @foreach($post->tags as $postTag)
+                                                {{$postTag->id == $tag->id ? 'selected':''}}
+                                                @endforeach
+                                                value="{{ $tag->id }}">
+                                                {{ $tag->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -104,7 +119,7 @@
 
                             <a class="btn btn-danger m-t-15 waves-effect"
                                href="{{ route('admin.post.index') }}">BACK</a>
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Update</button>
 
 
                         </div>
@@ -125,7 +140,7 @@
                         </div>
 
                         <div class="body">
-                            <textarea id="tinymce" name="body"></textarea>
+                            <textarea id="tinymce" name="body">{{$post->body}}</textarea>
                         </div>
                     </div>
                 </div>
