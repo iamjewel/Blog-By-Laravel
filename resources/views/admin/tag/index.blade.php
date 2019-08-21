@@ -59,8 +59,8 @@
                             <td>{{$i++}}</td>
                             <td>{{$tag->name}}</td>
                             <td>{{$tag->posts->count()}}</td>
-                            <td>{{$tag->created_at}}</td>
-                            <td>{{$tag->updated_at}}</td>
+                            <td>{{$tag->created_at->toFormattedDateString()}}</td>
+                            <td>{{$tag->updated_at->toFormattedDateString()}}</td>
 
                             <td class="text-center">
                                 <a href="{{route('admin.tag.edit',$tag->id)}}" class="btn btn-info waves-effect">

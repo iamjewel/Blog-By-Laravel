@@ -29,12 +29,7 @@ class PostController extends Controller
         return view('admin.post.create', compact('categories', 'tags'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return array
-     */
+    //Add Post Function
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -92,37 +87,22 @@ class PostController extends Controller
         return redirect()->route('admin.post.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Post $post
-     * @return \Illuminate\Http\Response
-     */
+    // Single Post Show
     public function show(Post $post)
     {
+        return view('admin.post.show', compact('post'));
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Post $post
-     * @return \Illuminate\Http\Response
-     */
+    //Edit Post View
     public function edit(Post $post)
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.post.edit', compact('post','categories', 'tags'));
+        return view('admin.post.edit', compact('post', 'categories', 'tags'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Post $post
-     * @return \Illuminate\Http\Response
-     */
+    //Update Post Function
     public function update(Request $request, Post $post)
     {
         $this->validate($request, [
@@ -158,7 +138,7 @@ class PostController extends Controller
             Storage::disk('public')->put('post/' . $imageName, $category);
 
         } else {
-            $imageName =  $post->image;
+            $imageName = $post->image;
         }
 
         $post->user_id = Auth::id();
@@ -183,14 +163,22 @@ class PostController extends Controller
         return redirect()->route('admin.post.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Post $post
-     * @return \Illuminate\Http\Response
-     */
+    //Delete Post Function
     public function destroy(Post $post)
     {
-        //
+
+        //Delete Post Image
+        if (Storage::disk('public')->exists('post/' . $post->image)) {
+            Storage::disk('public')->delete('post/' . $post->image);
+        }
+
+        $post->categories()->detach();
+        $post->tags()->detach();
+
+        $post->delete();
+
+        Toastr::success('Post Deleted Successfully', 'success');
+
+        return redirect()->route('admin.post.index');
     }
 }

@@ -59,8 +59,8 @@
                             <td>{{$i++}}</td>
                             <td>{{$category->name}}</td>
                             <td>{{$category->posts->count()}}</td>
-                            <td>{{$category->created_at}}</td>
-                            <td>{{$category->updated_at}}</td>
+                            <td>{{$category->created_at->toFormattedDateString()}}</td>
+                            <td>{{$category->updated_at->toFormattedDateString()}}</td>
 
                             <td class="text-center">
                                 <a href="{{route('admin.category.edit',$category->id)}}"

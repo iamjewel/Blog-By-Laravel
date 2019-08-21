@@ -47,7 +47,7 @@
                         <th class="text-center">View</th>
                         <th class="text-center">Approval</th>
                         <th class="text-center">Status</th>
-{{--                        <th class="text-center">Body</th>--}}
+                        {{--                        <th class="text-center">Body</th>--}}
                         <th class="text-center">Created At</th>
                         <th class="text-center">Updated At</th>
                         <th class="text-center">Action</th>
@@ -80,11 +80,16 @@
                                     <span class="badge bg-red">Not Published</span>
                                 @endif
                             </td>
-{{--                            <td>{{str_limit($post->body,20)}}</td>--}}
-                            <td>{{$post->created_at}}</td>
-                            <td>{{$post->updated_at}}</td>
+                            {{--                            <td>{{str_limit($post->body,20)}}</td>--}}
+                            <td>{{$post->created_at->toFormattedDateString()}}</td>
+                            <td>{{$post->updated_at->toFormattedDateString()}}</td>
 
                             <td class="text-center">
+                                <a href="{{route('admin.post.show',$post->id)}}"
+                                   class="btn btn-info waves-effect" >
+                                    <i class="material-icons" >visibility</i>
+                                </a>
+
                                 <a href="{{route('admin.post.edit',$post->id)}}"
                                    class="btn btn-info waves-effect">
                                     <i class="material-icons">edit</i>
@@ -125,11 +130,37 @@
 
 
 @push('js')
-    {{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.15.3/dist/sweetalert2.all.min.js"></script>--}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.15.3/dist/sweetalert2.all.min.js"></script>
 
     <script type="text/javascript">
         function deletePost(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            });
 
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+
+                }
+            })
         }
     </script>
 @endpush
