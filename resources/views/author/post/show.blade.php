@@ -9,7 +9,7 @@
 @section('content')
     <div class="container-fluid">
 
-        <a href="{{ route('admin.post.index') }}" class="btn btn-danger waves-effect">BACK</a>
+        <a href="{{ route('author.post.index') }}" class="btn btn-danger waves-effect">BACK</a>
 
         @if($post->is_approved == false)
 
