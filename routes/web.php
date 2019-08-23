@@ -17,6 +17,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::resource('post', 'PostController');
 
 
+        Route::get('settings', 'SettingsController@index')->name('settings');
+
         Route::get('/pending/post', 'PostController@pending')->name('post.pending');
         Route::put('/post/{id}/approve', 'PostController@approval')->name('post.approve');
 
