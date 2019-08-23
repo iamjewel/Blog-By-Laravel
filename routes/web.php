@@ -1,12 +1,8 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 //Subscriber
 Route::post('subscriber', 'SubscriberController@store')->name('subscriber.store');
