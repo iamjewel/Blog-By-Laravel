@@ -18,6 +18,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
 
 
         Route::get('settings', 'SettingsController@index')->name('settings');
+        Route::put('profile-update', 'SettingsController@updateProfile')->name('profile.update');
+
 
         Route::get('/pending/post', 'PostController@pending')->name('post.pending');
         Route::put('/post/{id}/approve', 'PostController@approval')->name('post.approve');
