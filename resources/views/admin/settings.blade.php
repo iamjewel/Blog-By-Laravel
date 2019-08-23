@@ -123,7 +123,7 @@
                                 <!-- Change Password -->
                                 <div role="tabpanel" class="tab-pane fade" id="change_password_with_icon_title">
 
-                                    <form method="POST" action="" class="form-horizontal">
+                                    <form method="POST" action="{{route('admin.password.update')}}" class="form-horizontal">
                                         @csrf
                                         @method('PUT')
 
