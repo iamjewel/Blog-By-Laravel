@@ -13,14 +13,9 @@
             <div class="header row">
 
                 <h2 class="col-md-6">
-                    Manage Post
+                    Pending Post
                     <span class="badge bg-info">{{$posts->count()}}</span>
                 </h2>
-
-                <a class="btn btn-primary waves-effect col-md-6" href="{{route('admin.post.create')}}">
-                    <i class="material-icons">add</i>
-                    <span>Add New Post</span>
-                </a>
             </div>
         </div>
 
