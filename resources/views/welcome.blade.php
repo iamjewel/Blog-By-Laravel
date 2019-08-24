@@ -96,7 +96,7 @@
                                                     <i class="ion-heart"></i>
                                                     {{$post->favorite_to_users->count()}}
 
-                                                    <form id="favorite-form-{{$post->id}}"
+                                                    <form id="favorite-form-{{$post->id}}" method="POST"
                                                           action="{{route('post.favorite',$post->id)}}"
                                                           style="display: none">
                                                         @csrf

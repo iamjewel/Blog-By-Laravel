@@ -10,7 +10,7 @@ Route::post('subscriber', 'SubscriberController@store')->name('subscriber.store'
 //Default Auth Routes
 Route::group(['middleware' => ['auth']],
     function () {
-        Route::get('favorite/{post}/add', 'FavoriteController@add')->name('post.favorite');
+        Route::post('favorite/{post}/add', 'FavoriteController@add')->name('post.favorite');
     });
 
 //Admin Routes
@@ -22,7 +22,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::resource('category', 'CategoryController');
         Route::resource('post', 'PostController');
 
-
+        //Setting
         Route::get('settings', 'SettingsController@index')->name('settings');
         Route::put('profile-update', 'SettingsController@updateProfile')->name('profile.update');
         Route::put('password-update', 'SettingsController@updatePassword')->name('password.update');
@@ -47,7 +47,10 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'Author', 
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
         Route::resource('post', 'PostController');
 
+        //Favorite
+        Route::get('/favorite', 'FavoriteController@index')->name('favorite.index');
 
+        //Setting
         Route::get('settings', 'SettingsController@index')->name('settings');
         Route::put('profile-update', 'SettingsController@updateProfile')->name('profile.update');
         Route::put('password-update', 'SettingsController@updatePassword')->name('password.update');
