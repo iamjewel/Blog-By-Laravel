@@ -90,6 +90,13 @@
 
                 <li class="header">System</li>
 
+                <li class="{{Request::is('/') ? 'active':''}}">
+                    <a href="{{route('home')}}">
+                        <i class="material-icons">home</i>
+                        <span>Front End</span>
+                    </a>
+                </li>
+
                 <li class="{{Request::is('admin/settings') ? 'active':''}}">
                     <a href="{{route('admin.settings')}}">
                         <i class="material-icons">settings</i>
@@ -130,6 +137,13 @@
                 </li>
 
                 <li class="header">System</li>
+
+                <li class="{{Request::is('/') ? 'active':''}}">
+                    <a href="{{route('home')}}">
+                        <i class="material-icons">home</i>
+                        <span>Front End</span>
+                    </a>
+                </li>
 
                 <li class="{{Request::is('author/settings') ? 'active':''}}">
                     <a href="{{route('author.settings')}}">

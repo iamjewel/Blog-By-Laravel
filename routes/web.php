@@ -27,10 +27,14 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::put('profile-update', 'SettingsController@updateProfile')->name('profile.update');
         Route::put('password-update', 'SettingsController@updatePassword')->name('password.update');
 
+        //Favorite
+        Route::get('/favorite', 'FavoriteController@index')->name('favorite.index');
 
+        //Pending+Approval
         Route::get('/pending/post', 'PostController@pending')->name('post.pending');
         Route::put('/post/{id}/approve', 'PostController@approval')->name('post.approve');
 
+        //Subscriber
         Route::get('/subscriber', 'SubscriberController@index')->name('subscriber.index');
         Route::delete('/subscriber/{subscriber}', 'SubscriberController@destroy')->name('subscriber.destroy');
 
