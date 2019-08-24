@@ -7,6 +7,9 @@ Route::get('/', 'HomeController@index')->name('home');
 //Subscriber
 Route::post('subscriber', 'SubscriberController@store')->name('subscriber.store');
 
+//FrontEnd Single Post View
+Route::get('post/{slug}', 'PostController@details')->name('post.details');
+
 //Default Auth Routes
 Route::group(['middleware' => ['auth']],
     function () {
