@@ -38,5 +38,11 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'Author', 
         Route::resource('post', 'PostController');
 
 
+
+        Route::get('settings', 'SettingsController@index')->name('settings');
+        Route::put('profile-update', 'SettingsController@updateProfile')->name('profile.update');
+        Route::put('password-update', 'SettingsController@updatePassword')->name('password.update');
+
+
     });
 
