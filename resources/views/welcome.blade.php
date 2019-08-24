@@ -74,7 +74,7 @@
 
                                     {{--Title--}}
                                     <h4 class="title">
-                                        <a href="#">
+                                        <a href="{{ route('post.details',$post->slug) }}">
                                             <b>{{$post->title}}</b>
                                         </a>
                                     </h4>
