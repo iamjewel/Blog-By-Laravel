@@ -17,7 +17,7 @@
         }
 
         .favorite_posts {
-            color: blue;
+            color: #870500;
         }
     </style>
 
@@ -172,14 +172,14 @@
                                         src="{{ Storage::disk('public')->url('post/'.$randompost->image) }}"
                                         alt="{{ $randompost->title }}"></div>
 
-                                <a class="avatar" href="#"><img
+                                <a class="avatar" href=""><img
                                         src="{{ Storage::disk('public')->url('profile/'.$randompost->user->image) }}"
                                         alt="Profile Image"></a>
 
                                 <div class="blog-info">
 
                                     <h4 class="title"><a
-                                            href=""><b>{{ $randompost->title }}</b></a>
+                                            href="{{ route('post.details',$randompost->slug) }}"><b>{{ $randompost->title }}</b></a>
                                     </h4>
 
                                     <ul class="post-footer">
