@@ -70,5 +70,10 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'Author', 
         Route::put('profile-update', 'SettingsController@updateProfile')->name('profile.update');
         Route::put('password-update', 'SettingsController@updatePassword')->name('password.update');
 
+
+        //Comment
+        Route::get('comments', 'CommentController@index')->name('comment.index');
+        Route::delete('comments/{id}', 'CommentController@destroy')->name('comment.destroy');
+
     });
 
