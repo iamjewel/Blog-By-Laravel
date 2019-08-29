@@ -76,10 +76,10 @@
                                         </li>
 
                                         <!-- Comment -->
-                                        <li><a href="#"><i class="ion-chatbubble"></i>{{$post->comments->count()}}</a></li>
+                                        <li><a href="{{route('post.details',$post->slug)}}"><i class="ion-chatbubble"></i>{{$post->comments->count()}}</a></li>
 
                                         <!-- View Count -->
-                                        <li><a href="#"><i class="ion-eye"></i>{{$post->view_count}}</a></li>
+                                        <li><a href="{{route('post.details',$post->slug)}}"><i class="ion-eye"></i>{{$post->view_count}}</a></li>
                                     </ul>
 
                                 </div>
