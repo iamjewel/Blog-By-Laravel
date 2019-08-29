@@ -20,7 +20,6 @@ Route::get('category/{slug}', 'PostController@postByCategory')->name('category.p
 Route::get('tag/{slug}', 'PostController@postByTag')->name('tag.posts');
 
 
-
 //Default Auth Routes
 Route::group(['middleware' => ['auth']],
     function () {
@@ -83,3 +82,8 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'Author', 
 
     });
 
+View::composer('layouts.frontend.partial.footer', function ($view) {
+    $categories = App\Category::all();
+
+    $view->with('categories', $categories);
+});
