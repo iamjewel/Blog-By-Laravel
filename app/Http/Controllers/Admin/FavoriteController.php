@@ -11,7 +11,7 @@ class FavoriteController extends Controller
 {
     public function index()
     {
-        $posts = Auth::user()->favorite_posts()->latest()->paginate(5);
+        $posts = Auth::user()->favorite_posts()->latest()->paginate(10);
         return view('admin.favorite', compact('posts'));
     }
 }
