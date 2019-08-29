@@ -49,6 +49,10 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::get('/subscriber', 'SubscriberController@index')->name('subscriber.index');
         Route::delete('/subscriber/{subscriber}', 'SubscriberController@destroy')->name('subscriber.destroy');
 
+        //Comment
+        Route::get('comments', 'CommentController@index')->name('comment.index');
+        Route::delete('comments', 'CommentController@destroy')->name('comment.destroy');
+
     });
 
 //Author Routes
