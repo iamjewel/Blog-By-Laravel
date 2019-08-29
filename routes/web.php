@@ -13,6 +13,12 @@ Route::get('posts', 'PostController@index')->name('post.index');
 //Single Post View FrontEnd
 Route::get('post/{slug}', 'PostController@details')->name('post.details');
 
+//Post By Category  View FrontEnd
+Route::get('category/{slug}', 'PostController@postByCategory')->name('category.posts');
+
+//Post By Tags View FrontEnd
+Route::get('tag/{slug}', 'PostController@postByTag')->name('tag.posts');
+
 
 
 //Default Auth Routes
