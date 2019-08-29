@@ -76,7 +76,7 @@
                                         </li>
 
                                         <!-- Comment -->
-                                        <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
+                                        <li><a href="#"><i class="ion-chatbubble"></i>{{$post->comments->count()}}</a></li>
 
                                         <!-- View Count -->
                                         <li><a href="#"><i class="ion-eye"></i>{{$post->view_count}}</a></li>
