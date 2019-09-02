@@ -121,7 +121,7 @@
                         </div>
 
                         <div class="body">
-                            <textarea id="tinymce" name="body"></textarea>
+                            <textarea class="form-control" rows="8"></textarea>
                         </div>
                     </div>
                 </div>
@@ -136,9 +136,6 @@
 @push('js')
     <!-- Select Plugin Js -->
     <script src="{{asset('/')}}assets/backend/plugins/bootstrap-select/js/bootstrap-select.js"></script>
-
-    <!-- TinyMCE -->
-    <script src="{{asset('/')}}assets/backend/plugins/tinymce/tinymce.js"></script>
 
     <script>
         $(function () {

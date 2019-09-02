@@ -3,9 +3,7 @@
 @section('title','Post')
 
 @push('css')
-    <!-- JQuery DataTable Css -->
-    <link href="{{ asset('assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
-@endpush
+   @endpush
 
 @section('content')
     <div class="container-fluid">
@@ -34,17 +32,7 @@
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Author</th>
-                                    <th><i class="material-icons">favorite</i></th>
-                                    {{--<th><i class="material-icons">comment</i><</th>--}}
-                                    <th><i class="material-icons">visibility</i></th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
+
                                 <tbody>
                                 @foreach($posts as $key=>$post)
                                     <tr>
@@ -80,18 +68,6 @@
 @endsection
 
 @push('js')
-    <!-- Jquery DataTable Plugin Js -->
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') }}"></script>
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/jszip.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
-
-    <script src="{{ asset('assets/backend/js/pages/tables/jquery-datatable.js') }}"></script>
 
     <script src="https://unpkg.com/sweetalert2@7.19.1/dist/sweetalert2.all.js"></script>
     <script type="text/javascript">
